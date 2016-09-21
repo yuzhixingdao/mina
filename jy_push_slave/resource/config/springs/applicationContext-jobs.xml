@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- 推送类 -->
+	<bean name="messageSentService" class="com.jy.slave.job.impl.MessageSentServiceImpl" singleton="true" autowire="byName"></bean>
+	
+	<!-- 配置触发器 -->
+    <!-- 发送消息 -->
+	<bean id="methodInvokingJobDetailFactoryBeanMessageSent" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"><ref bean="messageSentService" /></property>
+       <property name="targetMethod"><value>scanMessageSent</value></property>
+    </bean>
+    <bean id="cronTriggerBeanMessageSent" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail"><ref bean="methodInvokingJobDetailFactoryBeanMessageSent" /></property>
+       <property name="cronExpression"><value>0/10 * * * * ?</value></property><!-- 每天10点扫描一次 -->
+    </bean>
+    
+
+	<!-- 添加触发器 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+       <property name="triggers">
+           <list>
+              <ref local="cronTriggerBeanMessageSent" />
+           </list>
+       </property>
+    </bean>
+
+</beans>

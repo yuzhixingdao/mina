@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 导入其他strtus配置文件 -->
+<!-- 	<include file="/config/struts/struts-back.xml" /> -->
+	
+<!--	<include file="/config/struts/struts-insurance.xml" />-->
+<!---->
+<!--	<package name="basePackage" extends="struts-default" namespace="/basePackage">-->
+<!--	-->
+<!--		<interceptors>-->
+<!--		-->
+<!--			<interceptor name="authorityInterceptor" class="com.jy.aicloud.interceptor.AuthorityInterceptor"/>-->
+<!--		-->
+<!--			<interceptor-stack name="myStack">-->
+<!--				<interceptor-ref name="authorityInterceptor"></interceptor-ref>-->
+<!--				<interceptor-ref name="defaultStack"></interceptor-ref>-->
+<!--			</interceptor-stack>-->
+<!--		</interceptors>-->
+<!--		<default-interceptor-ref name="myStack"/>-->
+<!--		-->
+<!--		<global-results>-->
+<!--			<result name="loginError" type="redirect">/login.jsp</result>-->
+<!--		</global-results>-->
+<!--		-->
+<!--	</package>-->
+<!--	-->
+<!--	<package name="admin" extends="struts-default" namespace="/admin">-->
+<!--		<action name="login" class="muserAction" method="login">-->
+<!--			<result name="loginSuccess">/jsp/index_welcome.jsp</result>-->
+<!--			<result name="loginError">/login.jsp</result>-->
+<!--		</action>-->
+<!--		<action name="exit" class="muserAction" method="exitSystem">-->
+<!--			<result name="exit" type="redirect">/login.jsp</result>-->
+<!--		</action>-->
+<!--	</package>-->
+
+	<package name="back" extends="struts-default" namespace="/back">
+		<action name="muser_*" class="muserAction" method="{1}">
+			<result name="success">/index.jsp</result>
+			<result name="success_queryList">/jsp/user_list.jsp</result>
+			<result name="success_queryPage">/jsp/user_page.jsp</result>
+		</action>
+	</package>
+	
+</struts>
