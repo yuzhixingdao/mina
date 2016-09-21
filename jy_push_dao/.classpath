@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resource"/>
+	<classpathentry kind="src" path="source"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/commons-beanutils-1.7.jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="libs/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="libs/ehcache-core-2.5.2.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate3.jar"/>
+	<classpathentry kind="lib" path="libs/mybatis-3.2.3.jar"/>
+	<classpathentry kind="lib" path="libs/mybatis-spring-1.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="libs/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="libs/spring-beans-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring-core-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring-orm-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring-tx-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
