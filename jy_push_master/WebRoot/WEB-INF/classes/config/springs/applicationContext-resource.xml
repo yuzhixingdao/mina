@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-3.2.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<context:property-placeholder location="classpath:config/props/jdbc.properties" />
+	
+	<import resource="classpath:config/springs/applicationContext-ifcs.xml" />
+	<import resource="classpath:config/springs/applicationContext-daos.xml" />
+	<import resource="classpath:config/springs/applicationContext-services.xml" />
+	<import resource="classpath:config/springs/applicationContext-actions.xml" />
+
+	<!-- 连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxPoolSize" value="3" />
+		<property name="minPoolSize" value="2" />
+		<property name="initialPoolSize" value="2" />
+		<property name="maxIdleTime" value="0" />
+		<property name="maxStatements" value="100" />
+		<property name="acquireIncrement" value="5" />
+		<property name="idleConnectionTestPeriod" value="60" />
+	</bean>
+	
+
+	<!-- hibernate -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				
+			</props>
+		</property>
+		
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:config/hibernates/</value>
+			</list>
+		</property>
+	</bean>
+	
+
+	<!--  -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="htManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:advice id="htxAdvice" transaction-manager="htManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="modify*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* com.jy.master.service.impl.*.*(..))" id="hpc" />
+		<aop:advisor advice-ref="htxAdvice" pointcut-ref="hpc" />
+	</aop:config>
+	
+</beans>
+

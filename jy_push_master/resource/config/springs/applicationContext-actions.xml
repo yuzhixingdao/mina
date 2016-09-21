@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="muserAction" class="com.jy.master.web.action.MUserAction" autowire="byName" scope="prototype" />
+	<bean id="jyMessageAction" class="com.jy.master.web.action.JyMessageAction" autowire="byName" scope="prototype" />
+	<bean id="jyAccessAction" class="com.jy.master.web.action.JyAccessAction" autowire="byName" scope="prototype" />
+	<bean id="jyMinaSessionAction" class="com.jy.master.web.action.JyMinaSessionAction" autowire="byName" scope="prototype" />
+	<bean id="jyMinaServicerAction" class="com.jy.master.web.action.JyMinaServicerAction" autowire="byName" scope="prototype" />
+	
+</beans>

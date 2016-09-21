@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jy_push_master"
+  id="myeclipse.1446017156281"
+  context-root="/jy_push_master"
+  j2ee-spec="1.4"
+  archive="jy_push_master.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

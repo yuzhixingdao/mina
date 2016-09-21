@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- 推送类 -->
+	<!-- <bean name="scanReportService" class="com.jy.mobile.ifc.selfsurvey.ScanReportService"></bean> -->
+	<bean name="scanVehicleService" class="com.jy.mobile.ifc.task.ScanVehicleService" singleton="true" autowire="byName"></bean>
+	
+	<!-- 配置触发器 -->
+	<!-- ... 
+	<bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"><ref bean="scanReportService" /></property>
+       <property name="targetMethod" ><value>execute</value></property>
+    </bean>
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail"><ref bean="methodInvokingJobDetail" /></property>
+       <property name="cronExpression"><value>0 * * * * ?</value></property>
+    </bean>-->
+    <!-- 保险提醒 -->
+	<bean id="methodInvokingJobDetailNotifyInsurant" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"><ref bean="scanVehicleService" /></property>
+       <property name="targetMethod"><value>notifyInsurant</value></property>
+    </bean>
+    <bean id="cronTriggerNotifyInsurant" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail"><ref bean="methodInvokingJobDetailNotifyInsurant" /></property>
+       <property name="cronExpression"><value>0 0 10 * * ?</value></property><!-- 每天10点扫描一次 -->
+    </bean>
+    <!-- 保养提醒 -->
+	<bean id="methodInvokingJobDetailNotifyMaintenance" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"><ref bean="scanVehicleService" /></property>
+       <property name="targetMethod"><value>notifyMaintenance</value></property>
+    </bean>
+    <bean id="cronTriggerNotifyMaintenance" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail"><ref bean="methodInvokingJobDetailNotifyMaintenance" /></property>
+       <property name="cronExpression"><value>0 0 11 * * ?</value></property><!-- 每天10点扫描一次 -->
+    </bean>
+    <!-- 年审提醒 -->
+	<bean id="methodInvokingJobDetailNotifyAnnual" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"><ref bean="scanVehicleService" /></property>
+       <property name="targetMethod"><value>notifyAnnual</value></property>
+    </bean>
+    <bean id="cronTriggerNotifyAnnual" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail"><ref bean="methodInvokingJobDetailNotifyAnnual" /></property>
+       <property name="cronExpression"><value>0 0 12 * * ?</value></property><!-- 每天10点扫描一次 -->
+    </bean>
+    
+
+	<!-- 添加触发器 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+       <property name="triggers">
+           <list>
+              <!-- <ref local="cronTrigger" /> -->
+              <ref local="cronTriggerNotifyInsurant" />
+              <ref local="cronTriggerNotifyMaintenance" />
+              <ref local="cronTriggerNotifyAnnual" />
+           </list>
+       </property>
+    </bean>
+
+</beans>

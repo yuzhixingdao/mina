@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	
+	<package name="backPackage" extends="struts-default" namespace="/backPackage">
+
+		<interceptors>
+			<interceptor name="authorityInterceptor" class="com.jy.master.web.interceptor.AuthorityInterceptor"/>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="authorityInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="myStack"/>
+
+		<global-results>
+			<result name="loginError" type="redirect">/login.jsp</result>
+		</global-results>
+
+	</package>
+	
+	<!-- 登录退出请求路径包 -->
+	<package name="login" extends="struts-default" namespace="/">
+		<action name="login" class="muserAction" method="login">
+			<result name="error_login">/login.jsp</result>
+			<result name="success_login">/index.jsp</result>
+		</action>
+		<action name="exitSystem" class="muserAction" method="exitSystem">
+			<result name="success_exitSystem">/login.jsp</result>
+		</action>
+	</package>
+
+	<!-- 访问路径 -->
+	<package name="back" extends="backPackage" namespace="/back">
+		<action name="message_*" class="jyMessageAction" method="{1}">
+			<result name="success_queryPage">/page/message_page.jsp</result>
+			<result name="success_removeData" type="redirect">/back/message_queryPage.do</result>
+			<result name="success_queryData">/page/message_info.jsp</result>
+		</action>
+		<action name="access_*" class="jyAccessAction" method="{1}">
+			<result name="success_queryPage">/page/access_page.jsp</result>
+			<result name="success_removeData" type="redirect">/back/access_queryPage.do</result>
+			<result name="success_queryData">/page/access_info.jsp</result>
+			<result name="success_editData">/page/access_edit.jsp</result>
+			<result name="success_editDataSubmit" type="redirect">/back/access_queryPage.do</result>
+		</action>
+		<action name="session_*" class="jyMinaSessionAction" method="{1}">
+			<result name="success_queryPage">/page/session_page.jsp</result>
+			<result name="success_removeData" type="redirect">/back/session_queryPage.do</result>
+			<result name="success_queryData">/page/session_info.jsp</result>
+			<result name="success_editData">/page/session_edit.jsp</result>
+			<result name="success_editDataSubmit" type="redirect">/back/session_queryPage.do</result>
+		</action>
+		<action name="servicer_*" class="jyMinaServicerAction" method="{1}">
+			<result name="success_queryPage">/page/servicer_page.jsp</result>
+			<result name="success_removeData" type="redirect">/back/servicer_queryPage.do</result>
+			<result name="success_queryData">/page/servicer_info.jsp</result>
+			<result name="success_editData">/page/servicer_edit.jsp</result>
+			<result name="success_editDataSubmit" type="redirect">/back/servicer_queryPage.do</result>
+		</action>
+	</package>
+	
+</struts>
